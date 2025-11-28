@@ -1,5 +1,3 @@
-from app.extract.csv_reader import CsvReader
+from extract.csv_reader import csv_reader
 print("hello world")
 
-reader = CsvReader("app/data/healthcare_dataset.csv")
-data = reader.readData()
