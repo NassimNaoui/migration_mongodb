@@ -8,3 +8,6 @@ __pycache__/
 
 # Env
 .env
+
+# Data
+.app/sample/data/healthcare_dataset.csv
