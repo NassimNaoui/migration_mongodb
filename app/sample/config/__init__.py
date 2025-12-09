@@ -1,0 +1,1 @@
+from .settings import MONGO_URI, DATABASE_NAME, COLLECTION_NAME
