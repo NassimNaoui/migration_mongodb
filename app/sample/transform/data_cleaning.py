@@ -56,24 +56,39 @@ class data_transform:
         except Exception as e:
             print(f'error during the transformation process : {e}')
 
+    def convert_dtypes_for_mongo(self, df:pd.DataFrame):
+        
+        df_converted = df.copy()
+
+        int_to_convert = ["age","admission_id", "room_number"]
+        float_to_convert = ["billing_amount"]
+        date_to_convert = ["date_of_admission", "discharge_date"]
+
+        for col in int_to_convert:
+            df_converted[col] = df_converted[col].apply(int)
+
+        for col in float_to_convert:
+            df_converted[col] = df_converted[col].apply(float)
+
+        for col in date_to_convert:
+            df_converted[col] = df_converted[col].dt.to_pydatetime()
+
+        return df_converted
+
     
     def convert_df_into_doc(self, df: pd.DataFrame) -> list:
         if df.empty:
             return []
 
-        # --- 1. Personal infos (Static cols) ---
-        PERSONAL_COLS = [
-            'first_name', 'last_name', 'gender', 'age', 'blood_type'
-        ]
         
-        # --- 2. Admissions infos ---
+        # --- Admissions infos ---
         ADMISSION_COLS = [
             'admission_id', 'date_of_admission', 'admission_type', 
             'room_number', 'medical_condition', 'medication', 
             'test_results', 'doctor', 'hospital'
         ]
         
-        # --- 3. Billing infos ---
+        # --- Billing infos ---
         BILLING_COLS = [
             'insurance_provider', 'billing_amount', 'discharge_date'
         ]
@@ -95,6 +110,16 @@ class data_transform:
             
             patient_info = group.iloc[0]
             patient_id = patient_info['key']
+
+            #personal infos object with numpy conversion
+
+            personal_infos = {
+                "first_name": patient_info['first_name'],
+                "last_name": patient_info['last_name'],
+                "gender": patient_info['gender'],
+                "age": int(patient_info['age']), 
+                "blood_type": patient_info['blood_type']
+            }
             
             # Creates admission list with the function created above
             admissions_list = [
@@ -105,7 +130,7 @@ class data_transform:
             # Creates the structured object
             document = {
                 patient_id: {
-                    "personal_infos": {col: patient_info[col] for col in PERSONAL_COLS},
+                    "personal_infos": personal_infos,
                     "admissions": admissions_list
                 }
             }

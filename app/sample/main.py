@@ -16,6 +16,7 @@ def main():
     data = reader.read_data(1,100, 100)
     data_transformed = cleaner.transform_data(data)
     data_transformed = cleaner.count_admission_id(data_transformed)
+
     document_to_load = cleaner.convert_df_into_doc(data_transformed)
 
     users = mongo_manager.get_collection()
