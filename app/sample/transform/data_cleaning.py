@@ -43,38 +43,6 @@ class data_transform:
         except Exception as e:
             print(f'error during the transformation process : {e}')
 
-    def count_admission_id(self, df : pd.DataFrame):
-
-        df_filtered = df.copy()
-
-        # --- Count the number of admissions for each patient ---
-
-        try:
-            df_filtered.sort_values(['name','age','gender','blood_type'], ascending=True)
-            df_filtered['admission_id'] = df_filtered.groupby(['name','age','gender','blood_type']).cumcount() + 1
-            return df_filtered
-        except Exception as e:
-            print(f'error during the transformation process : {e}')
-
-    def convert_dtypes_for_mongo(self, df:pd.DataFrame):
-        
-        df_converted = df.copy()
-
-        int_to_convert = ["age","admission_id", "room_number"]
-        float_to_convert = ["billing_amount"]
-        date_to_convert = ["date_of_admission", "discharge_date"]
-
-        for col in int_to_convert:
-            df_converted[col] = df_converted[col].apply(int)
-
-        for col in float_to_convert:
-            df_converted[col] = df_converted[col].apply(float)
-
-        for col in date_to_convert:
-            df_converted[col] = df_converted[col].dt.to_pydatetime()
-
-        return df_converted
-
     
     def convert_df_into_doc(self, df: pd.DataFrame) -> list:
         if df.empty:
@@ -83,7 +51,7 @@ class data_transform:
         
         # --- Admissions infos ---
         ADMISSION_COLS = [
-            'admission_id', 'date_of_admission', 'admission_type', 
+            'date_of_admission', 'admission_type', 
             'room_number', 'medical_condition', 'medication', 
             'test_results', 'doctor', 'hospital'
         ]
@@ -93,7 +61,7 @@ class data_transform:
             'insurance_provider', 'billing_amount', 'discharge_date'
         ]
 
-        # --- 4. Creates admission object with billing infos ---
+        # ---  Creates admission object with billing infos ---
         def Creates_admission_obj(admission_row):
             admission_dict = admission_row[ADMISSION_COLS].to_dict()
             
@@ -103,7 +71,7 @@ class data_transform:
             admission_dict['billing_infos'] = billing_dict
             return admission_dict
 
-        # --- 5. Creates the final document ---
+        # ---  Creates the final document ---
         def build_patient_doc(group):
             # group = all admissions for each patient
             
@@ -129,19 +97,18 @@ class data_transform:
             
             # Creates the structured object
             document = {
-                patient_id: {
-                    "personal_infos": personal_infos,
-                    "admissions": admissions_list
-                }
+                "patient_id" : patient_id, 
+                "personal_infos": personal_infos,
+                "admissions": admissions_list
             }
             
             return [document]
 
 
-        # --- 6. group by key ---
+        # ---  group by key ---
         grouped_data = df.groupby('key').apply(build_patient_doc)
         
-        # --- 7 Flatten the object --- 
+        # --- Flatten the object --- 
         final_docs = [doc for sublist in grouped_data.tolist() for doc in sublist]
         
         return final_docs
