@@ -2,6 +2,7 @@ from app.sample.extract.csv_reader import csv_reader
 from app.sample.transform.data_cleaning import data_transform
 import pandas as pd
 import numpy as np
+from datetime import date
 
 def test_transform_data():
 
@@ -53,6 +54,28 @@ def test_convert_df_into_doc():
 
     # --- checking the data type ---
     
-    
+    expected_schema_first_level = {"patient_id" : str, "personal_infos" : dict, "admissions" : list}
+
+    for key, expected_type in expected_schema_first_level.items():
+        assert key in final_doc
+        assert isinstance(final_doc[key], expected_type)
+
+    expected_schema_second_level = {"first_name" : str, "last_name" : str, "age" : int,"gender" : str, "blood_type" : str}
+
+    for key, expected_type in expected_schema_second_level.items():
+        assert key in final_doc['personal_infos']
+        assert isinstance(final_doc['personal_infos'][key], expected_type)
+
+    expected_schema_third_level = {"date_of_admission" : date, "admission_type" : str , "room_number" : int , "medical_condition" : str , "medication" : str , "test_results" : str , "doctor" : str , "hospital" : str , "billing_infos" : dict }
+
+    for key, expected_type in expected_schema_third_level.items():
+        assert key in final_doc['admissions'][0]
+        assert isinstance(final_doc['admissions'][0][key], expected_type)
+
+    expected_schema_forth_level = {"insurance_provider" : str, "billing_amount" : float, "discharge_date" : date}
+
+    for key, expected_type in expected_schema_forth_level.items():
+        assert key in final_doc['admissions'][0]['billing_infos']
+        assert isinstance(final_doc['admissions'][0]['billing_infos'][key], expected_type)
 
 
