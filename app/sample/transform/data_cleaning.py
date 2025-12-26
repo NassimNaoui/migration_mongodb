@@ -21,7 +21,13 @@ class data_transform:
             df_transformed["name"] =  df_transformed["name"].str.upper()
 
             # --- Delete title in Name
-            df_transformed['name'] = df_transformed['name'].str.upper().str.replace(r'\b(MRS|MR|MS|DR)\.?\s*', '', regex=True).str.strip()
+            df_transformed['name'] = df_transformed['name'].str.replace('MRS.', '', regex=False)
+            df_transformed['name'] = df_transformed['name'].str.replace('MR.', '', regex=False)
+            df_transformed['name'] = df_transformed['name'].str.replace('MS.', '', regex=False)
+            df_transformed['name'] = df_transformed['name'].str.replace('DR.', '', regex=False)
+
+            # --- strip the col Name ---
+            df_transformed['name'] = df_transformed['name'].str.strip()
 
             # --- return the first name col and last name col ---
             df_transformed[['first_name', 'last_name']] = df_transformed['name'].str.strip().str.split(r'\s+', n=1, expand=True)
