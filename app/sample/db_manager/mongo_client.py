@@ -1,4 +1,4 @@
-from config.settings import MONGO_URI, DATABASE_NAME, COLLECTION_NAME
+from app.sample.config.settings import MONGO_URI, DATABASE_NAME, COLLECTION_NAME
 from pymongo import MongoClient
 
 class mongo_db_manager:

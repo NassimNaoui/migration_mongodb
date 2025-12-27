@@ -1,31 +1,27 @@
-from extract.csv_reader import csv_reader
-from transform.data_cleaning import data_transform
-from load.mongo_loader import data_loader
-from db_manager import mongo_manager
+from app.sample.extract.csv_reader import csv_reader
+from app.sample.transform.data_cleaning import data_transform
+from app.sample.load.mongo_loader import data_loader
+from app.sample.db_manager import mongo_manager
 
 import pandas as pd
 
-
-if __name__ == "__main__":
-    
+def main():
     if mongo_manager.ping_server():
         users = mongo_manager.get_collection()
         users.create_index("patient_id", unique=True)
         print("✅ connexion to MongoDB succeed : The server is online")
     else:
         print("❌ connexion to mongoDB failed : The server is offline")
-    
+        return  # On arrête si la connexion échoue
 
-    reader = csv_reader(file_path='data/healthcare_dataset.csv')
+    reader = csv_reader(file_path='app/sample/data/healthcare_dataset.csv')
     cleaner = data_transform()
     loader = data_loader(users)
 
     batch_size = 10000
-    total_rows = len(pd.read_csv('data/healthcare_dataset.csv'))
-
+    total_rows = len(pd.read_csv('app/sample/data/healthcare_dataset.csv'))
 
     for batch_number, offset in enumerate(range(0, total_rows, batch_size), start=1):
-        
         data = reader.read_data(offset, batch_size)
 
         if data.empty:
@@ -39,6 +35,10 @@ if __name__ == "__main__":
 
         try:
             loader.load_many_docs(document_to_load)
-            print(f"✅ Loaded  Batch #{batch_number}")
+            print(f"✅ Loaded Batch #{batch_number}")
         except Exception as e:
-            print(f"❌ Error Batch #{batch_number} : {e} ")
+            print(f"❌ Error Batch #{batch_number} : {e}")
+
+
+if __name__ == "__main__":
+    main()

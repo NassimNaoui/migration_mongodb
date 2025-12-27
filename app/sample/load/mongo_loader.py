@@ -11,6 +11,10 @@ class data_loader:
         operations = []
 
         for doc in documents:
+            admissions_list = doc["admissions"] 
+            if not isinstance(admissions_list, list):
+                admissions_list = [admissions_list]
+
             operations.append(
                 UpdateOne(
                     {"patient_id": doc["patient_id"]},
@@ -21,7 +25,7 @@ class data_loader:
                         },
                         "$addToSet": {
                             "admissions": {
-                                "$each": doc["admissions"]
+                                "$each": admissions_list
                             }
                         }
                     },
