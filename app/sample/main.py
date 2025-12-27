@@ -1,6 +1,6 @@
-from app.sample.extract.csv_reader import csv_reader
-from app.sample.transform.data_cleaning import data_transform
-from app.sample.load.mongo_loader import data_loader
+from app.sample.extract.csv_reader import csvReader
+from app.sample.transform.data_cleaning import dataTransform
+from app.sample.load.mongo_loader import dataLoader
 from app.sample.db_manager import mongo_manager
 
 import pandas as pd
@@ -14,9 +14,9 @@ def main():
         print("❌ connexion to mongoDB failed : The server is offline")
         return  # On arrête si la connexion échoue
 
-    reader = csv_reader(file_path='app/sample/data/healthcare_dataset.csv')
-    cleaner = data_transform()
-    loader = data_loader(users)
+    reader = csvReader(file_path='app/sample/data/healthcare_dataset.csv')
+    cleaner = dataTransform()
+    loader = dataLoader(users)
 
     batch_size = 10000
     total_rows = len(pd.read_csv('app/sample/data/healthcare_dataset.csv'))

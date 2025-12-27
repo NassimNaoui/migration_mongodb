@@ -1,12 +1,12 @@
 from app.sample.db_manager import mongo_manager
-from app.sample.transform.data_cleaning import data_transform
+from app.sample.transform.data_cleaning import dataTransform
 import pandas as pd
 from datetime import date
 
 def test_data_validation_mongo():
     
     data = pd.read_csv('app/sample/data/healthcare_dataset.csv')
-    cleaner = data_transform()
+    cleaner = dataTransform()
     data = cleaner.transform_data(data)
 
     len_doc_expected = data['key'].nunique()

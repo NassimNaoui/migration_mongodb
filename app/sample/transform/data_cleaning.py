@@ -1,6 +1,6 @@
 import pandas as pd
 
-class data_transform:
+class dataTransform:
     def __init__(self):
         pass
 

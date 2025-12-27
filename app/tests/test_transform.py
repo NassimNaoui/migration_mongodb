@@ -1,5 +1,5 @@
-from app.sample.extract.csv_reader import csv_reader
-from app.sample.transform.data_cleaning import data_transform
+from app.sample.extract.csv_reader import csvReader
+from app.sample.transform.data_cleaning import dataTransform
 import pandas as pd
 import numpy as np
 from datetime import date
@@ -7,7 +7,7 @@ from datetime import date
 def test_transform_data():
 
     data = pd.read_csv('app/sample/data/healthcare_dataset.csv')
-    cleaner = data_transform()
+    cleaner = dataTransform()
     data_cleaned = cleaner.transform_data(data)
 
     expected_cols = ["name", "age", "gender", "blood_type", "medical_condition", "date_of_admission",
@@ -40,7 +40,7 @@ def test_transform_data():
 def test_convert_df_into_doc():
 
     data = pd.read_csv('app/sample/data/healthcare_dataset.csv', nrows=200)
-    cleaner = data_transform()
+    cleaner = dataTransform()
     data_cleaned = cleaner.transform_data(data)
     final_doc = cleaner.convert_df_into_doc(data_cleaned)
     final_doc = final_doc[0]

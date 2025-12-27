@@ -1,12 +1,12 @@
 from app.sample.config.settings import MONGO_URI, DATABASE_NAME, COLLECTION_NAME
 from pymongo import MongoClient
 
-class mongo_db_manager:
+class mongoDbManager:
     _instance = None
 
     def __new__(cls):
         if cls._instance is None:
-            cls._instance = super(mongo_db_manager, cls).__new__(cls)
+            cls._instance = super(mongoDbManager, cls).__new__(cls)
             cls._instance._client = MongoClient(MONGO_URI)
             cls._instance._db = cls._instance._client[DATABASE_NAME]
         return cls._instance
@@ -26,4 +26,4 @@ class mongo_db_manager:
     def close_connection(self):
         self._client.close()
 
-mongo_manager = mongo_db_manager()
+mongo_manager = mongoDbManager()

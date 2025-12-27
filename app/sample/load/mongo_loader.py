@@ -1,6 +1,6 @@
 from pymongo import UpdateOne
 
-class data_loader:
+class dataLoader:
     def __init__(self, collection):
         self.collection = collection
 
