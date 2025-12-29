@@ -34,8 +34,8 @@ docker-compose up -d
 
 ### 🔧 Useful Commands
 | Description | Command |
-| ... | ... |
-| View logs | docker-compose logs -f |
-| Stop services | docker-compose stop |
-| Remove containers and network | docker-compose down |
-| Rebuild after code changes | docker-compose up -d --build |
+| :--- | :--- |
+| View logs | `docker-compose logs -f` |
+| Stop services | `docker-compose stop` |
+| Remove containers and network | `docker-compose down` |
+| Rebuild after code changes | `docker-compose up -d --build` |
