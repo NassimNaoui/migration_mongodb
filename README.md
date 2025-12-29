@@ -24,7 +24,8 @@ cd migration_mongodb
 
 ### 2. Data Setup
 Place the downloaded CSV file into the following directory:
-*app/sample/data/healthcare_dataset.csv*
+
+> app/sample/data/healthcare_dataset.csv
 
 ### 3. Launch 
 ```bash
@@ -32,7 +33,9 @@ docker-compose up -d
 ```
 
 ### 🔧 Useful Commands
-View logs : docker-compose logs -f
-Stop services : docker-compose stop
-Remove containers and network : docker-compose down
-Rebuild after code changes : docker-compose up -d --build
+| Description | Command |
+| :... | :... |
+| View logs | docker-compose logs -f |
+| Stop services | docker-compose stop |
+| Remove containers and network | docker-compose down |
+| Rebuild after code changes | docker-compose up -d --build |
