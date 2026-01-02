@@ -57,4 +57,4 @@ The pipeline follows a modular Extract, Transform, Load process to ensure data q
 
 *Performance: The ETL process is designed to handle data in batches to optimize memory usage and speed up the migration.*
 
-<img src="assets/etl-process.gif" width="600">
+<img src="assets/etl-process.gif">
