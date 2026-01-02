@@ -39,3 +39,21 @@ docker-compose up -d
 | Stop services | `docker-compose stop` |
 | Remove containers and network | `docker-compose down` |
 | Rebuild after code changes | `docker-compose up -d --build` |
+
+## ✨ Key Features & ETL Logic
+The pipeline follows a modular Extract, Transform, Load process to ensure data quality:
+
+- ✅ Data Extraction: Efficiently reads the healthcare CSV dataset.
+
+- ✅ Data Cleaning:
+
+    - Deduplication: Identification and removal of duplicate records.
+    - Name Normalization: Names are converted to uppercase, and titles (Mr, Mrs, Dr, etc.) are stripped.
+    - Financial Formatting: The Billing Amount column is rounded.
+    - Type Conversion: Date columns are parsed into proper datetime objects.
+    - Unique Mapping: Generation of a unique key for each patient record.
+
+- ✅ Loading: Transformation into JSON-like documents and batch insertion into MongoDB.
+
+[!TIP] Performance: The ETL process is designed to handle data in batches to optimize memory usage and speed up the migration.
+
