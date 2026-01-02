@@ -55,5 +55,6 @@ The pipeline follows a modular Extract, Transform, Load process to ensure data q
 
 - ✅ Loading: Transformation into JSON-like documents and batch insertion into MongoDB.
 
-[!TIP] Performance: The ETL process is designed to handle data in batches to optimize memory usage and speed up the migration.
+*Performance: The ETL process is designed to handle data in batches to optimize memory usage and speed up the migration.*
 
+![ETL Process](assets/etl-process.gif)
