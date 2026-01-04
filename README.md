@@ -7,12 +7,20 @@
 Python ETL pipeline designed to extract, clean, and load healthcare data into **MongoDB**. 
 Features Docker containerization for seamless deployment and modular Python structure for easy maintenance.
 
+---
+
+## Summary
+
+[Architecture](#🏗-architecture)
+[Quick Start with Docker](#🛠-quick-start-with-docker)
+[Key Features & ETL Logic](#✨-key-features--etl-logic)
+[Tests](#🧪-tests)
+
+
 ## 🏗 Architecture
 - **Source:** CSV (Kaggle Healthcare Dataset)
 - **Processing:** Python (Cleaning & Transformation)
 - **Destination:** MongoDB
-
----
 
 ## 🛠 Quick Start with Docker
 
@@ -62,3 +70,45 @@ The pipeline follows a modular Extract, Transform, Load process to ensure data q
 *Performance: The ETL process is designed to handle data in batches to optimize memory usage and speed up the migration.*
 
 <img src="assets/etl-process.gif">
+
+## 🧪 Tests
+
+Tests are written using **pytest**, including unit tests, integration tests, and data validation tests.
+
+The goal is to validate each step of the ETL pipeline **before running the full process**.
+
+⚠️ Note: The **Load tests use a mocked MongoDB**, so no real data will be affected.  
+The **data validation tests**, however, must be executed **after data has been successfully loaded into a real MongoDB instance**.
+
+### 🏃‍♂️ Running the tests
+
+You can run tests step by step:
+
+#### 1. Extract
+```bash
+pytest app/tests/test_extract.py
+```
+
+#### 2. Transform
+
+``` bash
+pytest app/tests/test_transform.py
+```
+
+#### 3. Load
+
+``` bash
+pytest app/tests/test_load.py
+```
+
+#### 4. Data validation
+
+``` bash
+pytest app/tests/data_validation.py
+```
+
+#### To run all at once 
+
+``` bash
+pytest app/tests
+```
