@@ -11,11 +11,10 @@ Features Docker containerization for seamless deployment and modular Python stru
 
 ## Summary
 
-[Architecture](#🏗-architecture)
-[Quick Start with Docker](#🛠-quick-start-with-docker)
-[Key Features & ETL Logic](#✨-key-features--etl-logic)
-[Tests](#🧪-tests)
-
+- [Architecture](#architecture)
+- [Quick Start with Docker](#quick-start-with-docker)
+- [Key Features & ETL Logic](#key-features--etl-logic)
+- [Tests](#tests)
 
 ## 🏗 Architecture
 - **Source:** CSV (Kaggle Healthcare Dataset)
@@ -104,7 +103,7 @@ pytest app/tests/test_load.py
 #### 4. Data validation
 
 ``` bash
-pytest app/tests/data_validation.py
+pytest app/tests/test_data_validation.py
 ```
 
 #### To run all at once 
