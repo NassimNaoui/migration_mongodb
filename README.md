@@ -1,5 +1,9 @@
 # 🚀🩺 Medical Data Migration (ETL)
 
+[![Python](https://img.shields.io/badge/python-3.10-blue)](https://www.python.org/)
+[![MongoDB](https://img.shields.io/badge/mongodb-6.0-green)](https://www.mongodb.com/)
+[![Docker](https://img.shields.io/badge/docker-enabled-blue)](https://www.docker.com/)
+
 Python ETL pipeline designed to extract, clean, and load healthcare data into **MongoDB**. 
 Features Docker containerization for seamless deployment and modular Python structure for easy maintenance.
 
