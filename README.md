@@ -9,12 +9,12 @@ Features Docker containerization for seamless deployment and modular Python stru
 
 ---
 
-## Summary
+## 📖 Summary
 
-- [Architecture](#architecture)
-- [Quick Start with Docker](#quick-start-with-docker)
-- [Key Features & ETL Logic](#key-features--etl-logic)
-- [Tests](#tests)
+- [Architecture](#-architecture)
+- [Quick Start with Docker](#-quick-start-with-docker)
+- [Key Features & ETL Logic](#-key-features--etl-logic)
+- [Tests](#-tests)
 
 ## 🏗 Architecture
 - **Source:** CSV (Kaggle Healthcare Dataset)
