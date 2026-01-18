@@ -14,6 +14,7 @@ Features Docker containerization for seamless deployment and modular Python stru
 - [Architecture](#-architecture)
 - [Quick Start with Docker](#-quick-start-with-docker)
 - [Key Features & ETL Logic](#-key-features--etl-logic)
+- [Database architecture]()
 - [Tests](#-tests)
 
 ## 🏗 Architecture
@@ -68,7 +69,75 @@ The pipeline follows a modular Extract, Transform, Load process to ensure data q
 
 *Performance: The ETL process is designed to handle data in batches to optimize memory usage and speed up the migration.*
 
-<img src="assets/etl-process.gif">
+<img src="assets/etl-process.gif" alt="etl process animated">
+
+## 🏭 Database Architecture
+The database follows a **document-oriented structure** (JSON-like) organized into 4 hierarchical layers. To ensure data integrity and minimize redundancy, the architecture is **patient-centric**:
+- The Patient serves as the root document.
+- All Consultations are stored within an array of objects nested under the patient.
+- Each consultation contains specific metadata and clinical observations.
+
+<img src="assets/database-scheme.png" alt="Database scheme">
+
+## 🔐 Authentification Strategy
+To secure the medical data, we implement a multi-layer authentication strategy based on MongoDB best practices.
+
+### 1. Enabling Authentification
+By default, MongoDB does not enforce authentication. To activate it, you must create and modify the configuration file (mongod.conf) as follows:
+```yaml
+security:
+    authorization:enabled
+```
+
+### 2. Principle of Least Privilege (POLP)
+We strictly follow the **Principle of Least Privilege**, ensuring that users only have the access necessary to perform their specific tasks. Below are the recommended roles and scopes:
+
+| Profil | Role | Scope |
+| :--- | :--- | :--- |
+| Administrator | userAdminAnyDatabase | Full system administration |
+| Data Engineer | readWrite + dbAdmin | Staging and production databases |
+| Data Analyst | read | Specific analytics databases |
+
+### 3. User Creation Commands
+
+#### 👑 Administrator 
+```bash
+use admin​
+db.createUser({​
+ user:"dba_admin",​
+ pwd: passwordPrompt(),​
+ roles: [​
+  {role:"userAdminAnyDataBase", db:"admin"},​
+  {role:"dbAdminAnyDataBase", db"admin"},​
+  {role:"clusterAdmin", db:"admin"}, ​
+ ]​
+})​
+```
+
+#### ⚙️ Data Engineer
+```bash
+use admin​
+db.createUser({​
+ user:"data_engineer_etl",​
+ pwd: passwordPrompt(),​
+ roles: [​
+  {role:"readWrite", db:"medical_db"},​
+  {role:"dbAdmin", db"medical_db"},
+ ]​
+})​
+```
+
+#### 📊 Data Analyst
+```bash
+use admin​
+db.createUser({​
+ user:"data_analyst_01",​
+ pwd: passwordPrompt(),​
+ roles: [​
+  {role:"read", db:"medical_db"}​
+ ]​
+})​​
+```
 
 ## 🧪 Tests
 
