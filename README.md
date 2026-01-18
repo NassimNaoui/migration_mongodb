@@ -15,7 +15,7 @@ Features Docker containerization for seamless deployment and modular Python stru
 - [Quick Start with Docker](#-quick-start-with-docker)
 - [Key Features & ETL Logic](#-key-features--etl-logic)
 - [Database Architecture](#-database-architecture)
-- [Authentification Strategy](#-authification-strategy)
+- [Authentification Strategy](#-authentification-strategy)
 - [Tests](#-tests)
 
 ## 🏗 Architecture
